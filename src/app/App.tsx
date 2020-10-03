@@ -1,8 +1,9 @@
 import React from 'react';
+import VideoDisplay from '../views/VideoDisplay';
 
 function App() {
   return (
-    <div>Starting</div>
+    <VideoDisplay />
   );
 }
 
