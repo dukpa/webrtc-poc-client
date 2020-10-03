@@ -1,9 +1,9 @@
 import React from 'react';
-import VideoDisplay from '../views/VideoDisplay';
+import Chat from '../containers/Chat';
 
 function App() {
   return (
-    <VideoDisplay />
+    <Chat />
   );
 }
 
