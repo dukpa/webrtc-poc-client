@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { makeCall } from '../services/web-rtc';
+import React from 'react';
 import VideoDisplay from '../components/VideoDisplay';
 import { useVideoStream } from '../services/video-stream';
 
-export default function Chat() {
-  const { stream } = useVideoStream();
-  
-  const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
+interface ChatProps {
+  peerConnection : RTCPeerConnection | null
+}
 
-  useEffect(() => {
-    (async () => {
-      const { peerConnection } = await makeCall();
-      setPeerConnection(peerConnection);
-    })();
-  }, []);
+export default function Chat({ peerConnection } : ChatProps) {
+  const { stream } = useVideoStream();
 
   return (
     <VideoDisplay stream={stream} />

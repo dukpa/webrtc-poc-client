@@ -10,17 +10,20 @@ export async function makeCall() {
   const peerConnection = new RTCPeerConnection(config);
   const offer = await peerConnection.createOffer();
   await peerConnection.setLocalDescription(offer);
-  console.log(offer);
+  console.log(encodeURI(`http://localhost:3000/answer/${offer.sdp}`));
   return { peerConnection, offer };
 }
 
-export async function answerCall(offer : RTCSessionDescriptionInit) {
+export async function answerCall(sdp : string) {
   const peerConnection = new RTCPeerConnection(config);
-  const remoteDesc = new RTCSessionDescription(offer)
+  const remoteDesc = new RTCSessionDescription({
+    type: 'offer',
+    sdp
+  })
   peerConnection.setRemoteDescription(remoteDesc);
   const answer = await peerConnection.createAnswer();
   await peerConnection.setLocalDescription(answer);
-  console.log(answer);
+  return { peerConnection, answer };
 }
 
 export async function recognizeAnswer(
