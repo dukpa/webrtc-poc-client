@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { makeCall } from '../services/web-rtc';
 import VideoDisplay from '../components/VideoDisplay';
-
-const constraints : MediaStreamConstraints = {
-  video: true,
-  audio: true
-};
+import { useVideoStream } from '../services/video-stream';
 
 export default function Chat() {
-  const [stream, setStream] = useState<MediaStream | null>(null);
+  const { stream } = useVideoStream();
+  
+  const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
 
   useEffect(() => {
-    const initialize = async () => {
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      setStream(stream);
-    };
-    initialize();
+    (async () => {
+      const { peerConnection } = await makeCall();
+      setPeerConnection(peerConnection);
+    })();
   }, []);
 
   return (

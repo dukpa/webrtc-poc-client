@@ -16,13 +16,13 @@ export default function VideoDisplay({ stream } : VideoDisplayProps) {
     if (stream && videoRef.current) {
       videoRef.current.srcObject = stream;
     }
-  }, [stream, videoRef.current]);
+  }, [stream, videoRef]);
 
   return (
     <div>
       {
         stream ?
-        <video ref={videoRef} style={videoStyle} autoPlay /> :
+        <video ref={videoRef} style={videoStyle} autoPlay muted /> :
         <div>Retrieving camera feed</div>
       }
     </div>
