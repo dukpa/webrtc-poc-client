@@ -1,8 +1,8 @@
 import React, { CSSProperties, useEffect, useRef } from 'react';
 
 const videoStyle : CSSProperties = {
-  height: '100%',
-  width: '100%'
+  height: 450,
+  width: 800
 };
 
 interface VideoDisplayProps {

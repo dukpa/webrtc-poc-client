@@ -5,7 +5,7 @@ const constraints : MediaStreamConstraints = {
   audio: true
 };
 
-export function useVideoStream() {
+export function useLocalVideoStream() {
   const [stream, setStream] = useState<MediaStream | null>(null);
 
   useEffect(() => {

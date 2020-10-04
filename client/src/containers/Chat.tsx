@@ -1,13 +1,11 @@
 import React from 'react';
 import VideoDisplay from '../components/VideoDisplay';
-import { useVideoStream } from '../services/video-stream';
 
 interface ChatProps {
-  peerConnection : RTCPeerConnection | null
+  stream : MediaStream | null
 }
 
-export default function Chat({ peerConnection } : ChatProps) {
-  const { stream } = useVideoStream();
+export default function Chat({ stream } : ChatProps) {
 
   return (
     <VideoDisplay stream={stream} />

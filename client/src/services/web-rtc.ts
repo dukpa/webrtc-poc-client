@@ -1,27 +1,39 @@
 const config : RTCConfiguration = {
   iceServers: [
     {
-      urls: 'stun:localhost:3100'
+      urls: 'stun:stun.l.google.com:19302'
     }
   ]
 };
 
-export async function makeCall() {
+const options : RTCOfferOptions = {
+  offerToReceiveAudio: true,
+  offerToReceiveVideo: true
+};
+
+export async function makeCall(localStream : MediaStream) {
   const peerConnection = new RTCPeerConnection(config);
-  const offer = await peerConnection.createOffer();
+  localStream.getTracks().forEach(track => {
+    console.log('adding track to peer connection', track);
+    peerConnection.addTrack(track, localStream);
+  });
+  const offer = await peerConnection.createOffer(options);
   await peerConnection.setLocalDescription(offer);
-  console.log(encodeURI(`http://localhost:3000/answer/${offer.sdp}`));
   return { peerConnection, offer };
 }
 
-export async function answerCall(sdp : string) {
+export async function answerCall(remoteStream : MediaStream, sdp : string) {
   const peerConnection = new RTCPeerConnection(config);
+  peerConnection.addEventListener('track', (event) => {
+    console.log('track found', event.track)
+    remoteStream.addTrack(event.track);
+  });
   const remoteDesc = new RTCSessionDescription({
     type: 'offer',
     sdp
-  })
+  });
   peerConnection.setRemoteDescription(remoteDesc);
-  const answer = await peerConnection.createAnswer();
+  const answer = await peerConnection.createAnswer(options);
   await peerConnection.setLocalDescription(answer);
   return { peerConnection, answer };
 }
