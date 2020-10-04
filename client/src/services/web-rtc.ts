@@ -23,8 +23,10 @@ export async function makeCall(localStream : MediaStream) {
   });
 
   //make the offer
+  console.log('calling');
   const offer = await peerConnection.createOffer(options);
   await peerConnection.setLocalDescription(offer);
+  console.log('sending offer', offer);
   publish({
     type: 'offer',
     payload: {

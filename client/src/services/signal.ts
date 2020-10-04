@@ -11,7 +11,9 @@ type SubscriberFunction = (message : Message) => void;
 const subscriptions : SubscriberFunction[] = [];
 
 export function publish(message : Message) {
-  subscriptions.forEach(subFn => subFn(message));
+  setTimeout(() => {
+    subscriptions.forEach(subFn => subFn(message));
+  }, 500);
 }
 
 export function subscribe(fn : SubscriberFunction) {
