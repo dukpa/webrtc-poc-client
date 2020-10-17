@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import VideoDisplay from '../components/VideoDisplay';
 import { answerCall } from '../services/web-rtc';
-import Chat from './Chat';
 
 export default function AnswerCall() {
   const [remoteStream] = useState<MediaStream>(() => new MediaStream());
@@ -13,5 +13,5 @@ export default function AnswerCall() {
     }
   }, [remoteStream, init]);
 
-  return <Chat stream={remoteStream} />
+  return <VideoDisplay stream={remoteStream} />
 }

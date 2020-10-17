@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import VideoDisplay from '../components/VideoDisplay';
 import { useLocalVideoStream } from '../services/video-stream';
 import { makeCall } from '../services/web-rtc';
-import Chat from './Chat';
 
 export default function MakeCall() {
   const localStream = useLocalVideoStream().stream;
@@ -14,9 +14,5 @@ export default function MakeCall() {
     }
   }, [localStream, init]);
   
-  return (
-    <div>
-      <Chat stream={localStream} />
-    </div>
-  );
+  return <VideoDisplay stream={localStream} />;
 }
